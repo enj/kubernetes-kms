@@ -10,7 +10,7 @@ spec:
   priorityClassName: system-node-critical
   hostNetwork: true
   initContainers:
-    - name: azure-kms-provider-generate-encrypted-cluster-seed-file-for-tests
+    - name: azure-kms-provider-generate-encrypted-cluster-seed-file
       image: ${REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION}
       imagePullPolicy: IfNotPresent
       args:
