@@ -99,6 +99,8 @@ spec:
         - --key-name=${KEY_NAME}
         - --key-version=${KEY_VERSION}
         - --managed-hsm=false
+        - --healthz-port=8788
+        - --metrics-addr=8096  # TODO fix is bats file too
         - --listen-addr=unix:///opt/azurekms-encrypted-cluster-seed.socket
         - --encrypted-cluster-seed-file=/data/encrypted_cluster_seed
         - -v=5
@@ -114,12 +116,12 @@ spec:
         readOnlyRootFilesystem: true
         runAsUser: 0
       ports:
-        - containerPort: 8787
+        - containerPort: 8788
           protocol: TCP
       livenessProbe:
         httpGet:
           path: /healthz
-          port: 8787
+          port: 8788
         failureThreshold: 2
         periodSeconds: 10
       resources:
