@@ -9,7 +9,7 @@ export ETCD_CA_CERT=/etc/kubernetes/pki/etcd/ca.crt
 export ETCD_CERT=/etc/kubernetes/pki/etcd/server.crt
 export ETCD_KEY=/etc/kubernetes/pki/etcd/server.key
 
-setup() {
+setup_file() {
     # get the initial number of encrypted count
     local metrics=$(kubectl get --raw /metrics)
     expected_encyption_count=$(echo "${metrics}" | grep -oP 'apiserver_envelope_encryption_key_id_hash_total\{[^\}]*transformation_type="to_storage"[^\}]*\}\s+\K\d+')
