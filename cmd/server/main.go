@@ -151,7 +151,7 @@ func setupKMSPlugin() error {
 		_ = encryptedClusterSeedResp.KeyID
 		_ = encryptedClusterSeedResp.Annotations
 
-		if err := os.WriteFile(*generateEncryptedClusterSeed, encryptedClusterSeedResp.Ciphertext, 0600); err != nil {
+		if err := os.WriteFile(*generateEncryptedClusterSeed, encryptedClusterSeedResp.Ciphertext, 0o600); err != nil {
 			return fmt.Errorf("failed to write cluster seed file: %w", err)
 		}
 
