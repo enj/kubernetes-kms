@@ -49,7 +49,9 @@ setup_file() {
 @test "check keyID hash used for encrypt/decrypt" {
     # expected_hash value is always sha256 hash of "1".
     local expected_hash="6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
-    local metrics=$(kubectl get --raw /metrics)
+    # ignore the key ID hash of the legacy approach, but only for status polling since it should not be called for encrypt or decrypt.
+    local legacy_hash='apiserver_envelope_encryption_key_id_hash_status_last_timestamp_seconds{key_id_hash="sha256:cbda52be2f8c13d323a3b17c4679118a60b91d29454305e02ee485185b6e386f",provider_name="azurekmsprovider"}'
+    local metrics=$(kubectl get --raw /metrics | grep -v --fixed-strings "${legacy_hash}")
 
     hashIDs=$(echo "${metrics}" | grep -oP 'sha256:\K[a-f0-9]+')
     for hash in ${hashIDs}; do
