@@ -162,3 +162,7 @@ e2e-test:
 e2e-kmsv2-test:
 	# Run test suite with kind cluster
 	bats -t tests/e2e/testkmsv2.bats
+
+e2e-kmsv2-test-encrypted-cluster-seed:
+	# Run test suite with kind cluster
+	bats -t tests/e2e/testkmsv2-encrypted-cluster-seed.bats

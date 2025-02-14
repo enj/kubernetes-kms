@@ -100,7 +100,7 @@ spec:
         - --key-version=${KEY_VERSION}
         - --managed-hsm=false
         - --healthz-port=8788
-        - --metrics-addr=8096  # TODO fix is bats file too
+        - --metrics-addr=8096
         - --listen-addr=unix:///opt/azurekms-encrypted-cluster-seed.socket
         - --encrypted-cluster-seed-file=/data/encrypted_cluster_seed
         - -v=5

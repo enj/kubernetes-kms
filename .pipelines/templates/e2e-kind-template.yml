@@ -143,6 +143,6 @@ jobs:
           KIND_NETWORK: $(KIND_NETWORK)
       - template: cluster-health-template.yml
       - template: kind-debug-template.yml
-      - script: make e2e-kmsv2-test  # TODO fix failures related to etcdctl checks
-        displayName: "Run e2e tests for KMS v2"
+      - script: make e2e-kmsv2-test-encrypted-cluster-seed
+        displayName: "Run e2e tests for KMS v2 with encrypted seed"
       - template: cleanup-template.yml
