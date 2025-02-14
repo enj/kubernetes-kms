@@ -7,7 +7,6 @@ package main
 
 import (
 	"context"
-	"encoding/base64"
 	"flag"
 	"fmt"
 	"math"
@@ -56,7 +55,7 @@ var (
 	proxyAddress = flag.String("proxy-address", "", "proxy address")
 	proxyPort    = flag.Int("proxy-port", 7788, "port for proxy")
 
-	encryptedClusterSeedStr = flag.String("encrypted-cluster-seed", "", "Encrypted cluster seed used to generate KEKs to encrypt API server DEK seeds, base64 raw URL encoded")
+	encryptedClusterSeedFile = flag.String("encrypted-cluster-seed-file", "", "File with encrypted cluster seed used to generate KEKs to encrypt API server DEK seeds")
 )
 
 func main() {
@@ -149,7 +148,7 @@ func setupKMSPlugin() error {
 	s := grpc.NewServer(opts...)
 
 	// legacy path
-	if len(*encryptedClusterSeedStr) == 0 {
+	if len(*encryptedClusterSeedFile) == 0 {
 		// register kms v1 server
 		kmsV1Server, err := plugin.NewKMSv1Server(kvClient)
 		if err != nil {
@@ -179,9 +178,9 @@ func setupKMSPlugin() error {
 	} else {
 		// note that this really should be a different plugin altogether, but doing it here lets me re-use CI for a POC
 
-		encryptedClusterSeed, err := base64.RawURLEncoding.DecodeString(*encryptedClusterSeedStr)
+		encryptedClusterSeed, err := os.ReadFile(*encryptedClusterSeedFile)
 		if err != nil {
-			return fmt.Errorf("failed to decode base64 encrypted cluster seed: %w", err)
+			return fmt.Errorf("failed to read encrypted cluster seed file: %w", err)
 		}
 
 		ctx, cancel := context.WithTimeout(ctx, time.Minute)
