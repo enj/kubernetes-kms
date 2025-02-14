@@ -47,6 +47,9 @@ setup_file() {
 }
 
 @test "check keyID hash used for encrypt/decrypt" {
+    run kubectl get --raw /metrics
+    assert_match "dfdasfsfsf" "${output}"
+
     # expected_hash value is always sha256 hash of "1".
     local expected_hash="6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
     local metrics=$(kubectl get --raw /metrics)
