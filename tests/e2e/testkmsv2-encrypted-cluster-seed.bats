@@ -34,6 +34,8 @@ setup() {
     local pod_name=$(kubectl get pod -n kube-system -l component=etcd -o jsonpath="{.items[0].metadata.name}")
     run kubectl exec ${pod_name} -n kube-system -- etcdctl --cacert=${ETCD_CA_CERT} --cert=${ETCD_CERT} --key=${ETCD_KEY} get /registry/secrets/default/secret1
     assert_match "k8s:enc:kms:v2:akv-encrypted-cluster-seed" "${output}"
+    assert_match "authenticated-data.azure.akv.io" "${output}"
+    assert_match "version.azure.akv.io" "${output}"
     assert_success
 }
 
