@@ -137,6 +137,11 @@ e2e-kmsv2-setup-kind: setup-local-registry
 	./scripts/connect-registry.sh &
 	sleep 90s
 
+e2e-kmsv2-setup-kind-encrypted-cluster-seed: setup-local-registry
+	./scripts/setup-kmsv2-kind-cluster-encrypted-cluster-seed.sh &
+	./scripts/connect-registry.sh &
+	sleep 90s
+
 .PHONY: setup-local-registry
 setup-local-registry:
 	./scripts/setup-local-registry.sh
